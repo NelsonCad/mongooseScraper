@@ -1,12 +1,16 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
 const db = require("./models");
+const logger = require("morgan");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+
+// Use morgan logger for logging requests
+app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -16,7 +20,7 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 // connect to mongodb
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.engine(
     "handlebars",
@@ -27,54 +31,96 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
-require("./public/routes/htmlRoutes");
-
-// function scrape() {
-
-//     const $ = cheerio.load(response.data);
-
-//     $("h3.title").each(function (i, element) {
-
-//         var title = $(element).text();
-
-//         var link = $(element).children().attr("href");
-
-//         db.Articles.insert({
-//             title: title,
-//             link: link
-//         });
-//     });
-
-// console.log(db.Articles);
-// }
+require("./public/routes/htmlRoutes")(app);
 
 // Scraping the website
-app.get("/techScrape", function (req, res) {
+app.get("/techscrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/technology/").then(function (response) {
 
-        // db.Articles.drop();
+            // db.Articles.drop();
+        
+            const $ = cheerio.load(response.data);
+        
+            $("h3.title").each(function (i, element) {
+        
+                let article = {};
+        
+                article.title = $(this).text();
+                article.link = $(this).children().attr("href");
+        
+                db.Article.create(article)
+                    .then(dbArticle => console.log(dbArticle))
+                    .catch(err => console.log(err));
+            });
+        
+            res.send("articles obtained");
 
-        const $ = cheerio.load(response.data);
-
-        $("h3.title").each(function (i, element) {
-
-            let article = {};
-
-            article.title = $(element).text();
-            article.link = $(element).children().attr("href");
-
-            db.Articles.create(article)
-                .then(dbArticle => console.log(dbArticle))
-                .catch(err => console.log(err));
-        });
-
-        console.log("aticles obtained");
+    }).catch(function (err) {
+        console.log(err);
     });
 });
 
+app.get("/spacescrape", function (req, res) {
+
+    axios.get("https://www.iflscience.com/space/").then(function (response) {
+
+            // db.Articles.drop();
+        
+            const $ = cheerio.load(response.data);
+        
+            $("h3.title").each(function (i, element) {
+        
+                let article = {};
+        
+                article.title = $(this).text();
+                article.link = $(this).children().attr("href");
+        
+                db.Article.create(article)
+                    .then(dbArticle => console.log(dbArticle))
+                    .catch(err => console.log(err));
+            });
+        
+            res.send("articles obtained");
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+});
+
+app.get("/physicsscrape", function (req, res) {
+
+    axios.get("https://www.iflscience.com/technology/").then(function (response) {
+
+            // db.Articles.drop();
+        
+            const $ = cheerio.load(response.data);
+        
+            $("h3.title").each(function (i, element) {
+        
+                let article = {};
+        
+                article.title = $(this).text();
+                article.link = $(this).children().attr("href");
+        
+                db.Article.create(article)
+                    .then(dbArticle => console.log(dbArticle))
+                    .catch(err => console.log(err));
+            });
+        
+            res.send("articles obtained");
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+});
+
+app.delete("/dbclear", function (req, res) {
+    db.Articles.drop();
+})
+
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
-app.listen(3000, function () {
+app.listen(8000, function () {
     console.log("App running on port " + PORT);
 });
 
