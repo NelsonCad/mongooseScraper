@@ -38,8 +38,6 @@ app.get("/techscrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/technology/").then(function (response) {
 
-        // db.Article.drop();
-
         const $ = cheerio.load(response.data);
 
         $("h3.title").each(function (i, element) {
@@ -65,8 +63,6 @@ app.get("/spacescrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/space/").then(function (response) {
 
-        // db.Article.drop();
-
         const $ = cheerio.load(response.data);
 
         $("h3.title").each(function (i, element) {
@@ -91,8 +87,6 @@ app.get("/spacescrape", function (req, res) {
 app.get("/physicsscrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/technology/").then(function (response) {
-
-        
 
         const $ = cheerio.load(response.data);
 
