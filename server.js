@@ -38,23 +38,23 @@ app.get("/techscrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/technology/").then(function (response) {
 
-            // db.Articles.drop();
-        
-            const $ = cheerio.load(response.data);
-        
-            $("h3.title").each(function (i, element) {
-        
-                let article = {};
-        
-                article.title = $(this).text();
-                article.link = $(this).children().attr("href");
-        
-                db.Article.create(article)
-                    .then(dbArticle => console.log(dbArticle))
-                    .catch(err => console.log(err));
-            });
-        
-            res.send("articles obtained");
+        // db.Article.drop();
+
+        const $ = cheerio.load(response.data);
+
+        $("h3.title").each(function (i, element) {
+
+            let article = {};
+
+            article.title = $(this).text();
+            article.link = $(this).children().attr("href");
+
+            db.Article.create(article)
+                .then(dbArticle => console.log(dbArticle))
+                .catch(err => console.log(err));
+        });
+
+        res.redirect("/");
 
     }).catch(function (err) {
         console.log(err);
@@ -65,23 +65,23 @@ app.get("/spacescrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/space/").then(function (response) {
 
-            // db.Articles.drop();
-        
-            const $ = cheerio.load(response.data);
-        
-            $("h3.title").each(function (i, element) {
-        
-                let article = {};
-        
-                article.title = $(this).text();
-                article.link = $(this).children().attr("href");
-        
-                db.Article.create(article)
-                    .then(dbArticle => console.log(dbArticle))
-                    .catch(err => console.log(err));
-            });
-        
-            res.send("articles obtained");
+        // db.Article.drop();
+
+        const $ = cheerio.load(response.data);
+
+        $("h3.title").each(function (i, element) {
+
+            let article = {};
+
+            article.title = $(this).text();
+            article.link = $(this).children().attr("href");
+
+            db.Article.create(article)
+                .then(dbArticle => console.log(dbArticle))
+                .catch(err => console.log(err));
+        });
+
+        res.redirect("/");
 
     }).catch(function (err) {
         console.log(err);
@@ -92,31 +92,36 @@ app.get("/physicsscrape", function (req, res) {
 
     axios.get("https://www.iflscience.com/technology/").then(function (response) {
 
-            // db.Articles.drop();
         
-            const $ = cheerio.load(response.data);
-        
-            $("h3.title").each(function (i, element) {
-        
-                let article = {};
-        
-                article.title = $(this).text();
-                article.link = $(this).children().attr("href");
-        
-                db.Article.create(article)
-                    .then(dbArticle => console.log(dbArticle))
-                    .catch(err => console.log(err));
-            });
-        
-            res.send("articles obtained");
+
+        const $ = cheerio.load(response.data);
+
+        $("h3.title").each(function (i, element) {
+
+            let article = {};
+
+            article.title = $(this).text();
+            article.link = $(this).children().attr("href");
+
+            db.Article.create(article)
+                .then(dbArticle => console.log(dbArticle))
+                .catch(err => console.log(err));
+        });
+
+        res.redirect("/");
 
     }).catch(function (err) {
         console.log(err);
     });
 });
 
-app.delete("/dbclear", function (req, res) {
-    db.Articles.drop();
+app.get("/dbClear", function (req, res) {
+    db.Article.deleteMany({}).then(function () {
+        res.redirect("/");
+    }).catch(function (err) {
+        console.log(err);
+    });
+
 })
 
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]

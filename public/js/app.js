@@ -1,12 +1,5 @@
-import Axios from "axios";
+$(function () {
 
-$(document).on("ready", function () {
+    $(".save-article")
 
-    $(document).on("click", ".dbClear", function () {
-
-        Axios.delete("/dbClear")
-
-    })
-
-
-});
+})

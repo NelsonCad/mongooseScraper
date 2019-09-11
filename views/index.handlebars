@@ -6,16 +6,17 @@
 
     <div class="column col-md-9">
 
-        <P>{{this.title}}</P>
-        <br>
+        <p>{{this.title}}</p>
         <a href="{{this.link}}">link to article</a>
 
     </div>
 
     <div class="column col-md-3">
-        <button class="save-article">Save article</button>
+        <button class="save-article" value="{{this.id}}">Save article</button>
     </div>
 
 </article>
+
+<br>
 
 {{/each}}
