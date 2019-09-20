@@ -140,10 +140,10 @@ app.post("/savedArticles/:id", function (req, res) {
         })
 });
 
-app.delete("/savedArticle/:id", function (req, res) {
-    db.savedArticle.remove({ _id: `ObjectId(${req.params.id})`})
+app.delete("/savedArticles/:id", function (req, res) {
+    db.savedArticle.deleteOne({ _id: req.params.id})
         .then(() => {
-            res.redirect("/saved")
+            res.redirect("/saved");
         })
         .catch( err => {
             console.log(err)

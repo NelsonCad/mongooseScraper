@@ -2,7 +2,7 @@
 <html lang="en">
 
 {{#each article}}
-<article class="row">
+<article class="row {{this.id}}">
 
     <div class="column col-md-9">
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="column col-md-3">
-        <button class="remove-article" value="{{this.id}}" href="/removeArticle"><strong>X</strong></button>
+        <button class="remove-article" articleID="{{this.id}}"><strong>X</strong></button>
     </div>
 
 </article>
