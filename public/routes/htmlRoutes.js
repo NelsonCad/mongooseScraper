@@ -8,9 +8,16 @@ module.exports = function (app) {
 
             res.render("index", {
                 article: dbArticle
-            })
-        })
+            });
+        });
     });
 
+    app.get("/saved", function (req, res) {
+        db.savedArticle.find({}).then(dbsavedArticle => {
+            res.render("saved", {
+                article: dbsavedArticle
+            });
+        });
+    });
 
 };

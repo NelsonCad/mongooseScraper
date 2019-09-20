@@ -54,9 +54,10 @@ app.get("/techscrape", function (req, res) {
 
         res.redirect("/");
 
-    }).catch(function (err) {
-        console.log(err);
-    });
+    })
+        .catch(function (err) {
+            console.log(err);
+        });
 });
 
 app.get("/spacescrape", function (req, res) {
@@ -79,9 +80,10 @@ app.get("/spacescrape", function (req, res) {
 
         res.redirect("/");
 
-    }).catch(function (err) {
-        console.log(err);
-    });
+    })
+        .catch(function (err) {
+            console.log(err);
+        });
 });
 
 app.get("/physicsscrape", function (req, res) {
@@ -104,11 +106,51 @@ app.get("/physicsscrape", function (req, res) {
 
         res.redirect("/");
 
-    }).catch(function (err) {
-        console.log(err);
-    });
+    })
+        .catch(function (err) {
+            console.log(err);
+        });
 });
 
+// saved articles [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+app.get("/savedArticles", function (req, res) {
+    db.savedArticle.find({}).then(() => {
+        res.redirect("/saved")
+    })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+app.post("/savedArticles/:id", function (req, res) {
+
+    let article = {
+        title: req.body.title,
+        link: req.body.link
+    }
+
+    console.log(article)
+
+    db.savedArticle.create(article)
+        .then(() => {
+            res.redirect("/")
+        })
+        .catch(err => {
+            console.log(err);
+        })
+});
+
+app.delete("/savedArticle/:id", function (req, res) {
+    db.savedArticle.remove({ _id: `ObjectId(${req.params.id})`})
+        .then(() => {
+            res.redirect("/saved")
+        })
+        .catch( err => {
+            console.log(err)
+        });
+});
+
+// Article database Clear [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 app.get("/dbClear", function (req, res) {
     db.Article.deleteMany({}).then(function () {
         res.redirect("/");
@@ -116,7 +158,7 @@ app.get("/dbClear", function (req, res) {
         console.log(err);
     });
 
-})
+});
 
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 app.listen(8000, function () {

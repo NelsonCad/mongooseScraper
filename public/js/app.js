@@ -1,16 +1,24 @@
 $(function () {
 
     $(document).on("click", ".save-article", function () {
-        let id = $(this).attr("value")
+        let id = $(this).attr("articleID");
+        let article = {};
+
+        article.title = $(this).attr("articleTitle");
+        article.link = $(this).attr("articleLink");
+
+        console.log(article);
 
         $.ajax({
             method: "POST",
-            url: "/savedarticles/" + id
-        }).then(function (data) {
-            console.log(data)
-        }).catch(function (err) {
-            console.log(err);
+            url: "/savedArticles/:" + id,
+            data: article
         })
-    })
+        .catch(function (err) {
+            console.log(err);
+        });
 
-})
+        $(this).text("Saved!");
+    });
+
+});
