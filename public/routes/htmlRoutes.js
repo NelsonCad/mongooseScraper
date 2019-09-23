@@ -10,6 +10,9 @@ module.exports = function (app) {
                 res.render("index", {
                     article: dbArticle
                 });
+            })
+            .catch(err => {
+                console.log(err)
             });
     });
 
@@ -19,6 +22,9 @@ module.exports = function (app) {
                 res.render("saved", {
                     article: dbsavedArticle
                 });
+            })
+            .catch(err => {
+                console.log(err)
             });
     });
 
