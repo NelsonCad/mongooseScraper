@@ -4,20 +4,30 @@ module.exports = function (app) {
 
     app.get("/", function (req, res) {
 
-        db.Article.find({}).then(function (dbArticle) {
+        db.Article.find({})
+            .then(function (dbArticle) {
 
-            res.render("index", {
-                article: dbArticle
+                res.render("index", {
+                    article: dbArticle
+                });
             });
-        });
     });
 
     app.get("/saved", function (req, res) {
-        db.savedArticle.find({}).then(dbsavedArticle => {
-            res.render("saved", {
-                article: dbsavedArticle
+        db.savedArticle.find({})
+            .then(dbsavedArticle => {
+                res.render("saved", {
+                    article: dbsavedArticle
+                });
             });
-        });
     });
 
+    // app.delete("/saved", function (req, res) {
+    //     db.savedArticle.find({})
+    //         .then(dbsavedArticle => {
+    //             res.render("saved", {
+    //                 article: dbsavedArticle
+    //             });
+    //         });
+    // });
 };

@@ -114,9 +114,10 @@ app.get("/physicsscrape", function (req, res) {
 
 // saved articles [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 app.get("/savedArticles", function (req, res) {
-    db.savedArticle.find({}).then(() => {
-        res.redirect("/saved")
-    })
+    db.savedArticle.find({})
+        .then(() => {
+            res.redirect("/saved")
+        })
         .catch(err => {
             console.log(err);
         });
@@ -141,22 +142,23 @@ app.post("/savedArticles/:id", function (req, res) {
 });
 
 app.delete("/savedArticles/:id", function (req, res) {
-    db.savedArticle.deleteOne({ _id: req.params.id})
+    db.savedArticle.remove({ _id: req.params.id })
         .then(() => {
-            res.redirect("/saved");
+            res.redirect("/saved")
         })
-        .catch( err => {
+        .catch(err => {
             console.log(err)
         });
 });
 
 // Article database Clear [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 app.get("/dbClear", function (req, res) {
-    db.Article.deleteMany({}).then(function () {
-        res.redirect("/");
-    }).catch(function (err) {
-        console.log(err);
-    });
+    db.Article.deleteMany({})
+        .then(function () {
+            res.redirect("/");
+        }).catch(function (err) {
+            console.log(err);
+        });
 
 });
 
