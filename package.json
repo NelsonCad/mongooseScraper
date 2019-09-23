@@ -4,7 +4,7 @@
   "description": "using mongoose to scrape data from a website",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
