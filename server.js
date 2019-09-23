@@ -163,7 +163,7 @@ app.get("/dbClear", function (req, res) {
 });
 
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
-app.listen(8000, function () {
+app.listen(PORT, function () {
     console.log("App running on port " + PORT);
 });
 
